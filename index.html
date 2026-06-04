@@ -574,7 +574,7 @@ app.listen(PORT, () => {
                         <pre><code id="code-better-sqlite3" class="language-javascript">
 const express = require('express');
 const cors = require('cors');
-const { DatabaseSync } = require('node:sqlite');  // ← Módosítás 1
+const { DatabaseSync } = require('node:sqlite')
 
 const app = express();
 app.use(express.json());
@@ -611,7 +611,7 @@ app.get("/vetites/:vazon", (req, res) => {
                      INNER JOIN mozik ON mozik.mazon = vetitesek.mazon 
                      INNER JOIN filmek ON filmek.fazon = vetitesek.fazon 
                      WHERE vetitesek.vazon = ?`;
-        const result = db.prepare(sql).get(Number(vazon));  // ← Ugyanaz!
+        const result = db.prepare(sql).get(Number(vazon));
         return res.status(200).json(result);
     } catch (error) {
         return res.status(500).json(error.message);
@@ -639,7 +639,6 @@ app.delete("/film/:fazon", (req, res) => {
         const fazon = Number(req.params.fazon);
         const sql = "DELETE FROM filmek WHERE fazon = ?";
         const result = db.prepare(sql).run(fazon);
-        // Módosítás 5: changes tulajdonság (hány sor változott)
         if (result.changes === 0) {
             return res.status(404).json({ message: "Film nem található" });
         }

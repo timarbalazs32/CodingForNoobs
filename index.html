@@ -585,7 +585,6 @@ const db = new DatabaseSync('mozihalo.db');
 try {
     db.exec(`SELECT name FROM sqlite_master WHERE type='table'`);
 } catch (err) {
-    // Ha nincs tábla, létrehozhatjuk őket itt
     console.log("Adatbázis táblák ellenőrzése...");
 }
 
@@ -624,7 +623,6 @@ app.post("/filmek", (req, res) => {
         const sql = `INSERT INTO filmek (fazon, fcim, rendezo, gyartasi_ev, mufaj, jegypont) 
                      VALUES (?, ?, ?, ?, ?, ?)`;
         const result = db.prepare(sql).run(fazon, fcim, rendezo, gyartasi_ev, mufaj, jegypont);
-        // Módosítás 4: lastInsertRowid helyett lastInsertRowid (ugyanaz a neve!)
         return res.status(201).json({
             message: "Film sikeresen hozzáadva",
             id: result.lastInsertRowid
